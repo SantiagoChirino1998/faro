@@ -17,6 +17,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        'deep-blue': '#004a99',
         'tertiary-fixed': withOpacity('--color-tertiary-fixed'),
         'error': withOpacity('--color-error'),
         'tertiary-container': withOpacity('--color-tertiary-container'),
