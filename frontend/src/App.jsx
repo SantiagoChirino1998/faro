@@ -10,6 +10,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import UsersPage from './pages/Users/UsersPage';
 import UserFormPage from './pages/Users/UserFormPage';
 import AuditoriaPage from './pages/Auditoria/AuditoriaPage';
+import RegistroDesaparecidoPage from './pages/Missing/RegistroDesaparecidoPage';
 
 function App() {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -71,6 +72,9 @@ function App() {
 
   return (
     <Routes>
+      {/* Rutas Públicas */}
+      <Route path="/registro" element={<RegistroDesaparecidoPage />} />
+      
       <Route
         path="/login"
         element={isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />}

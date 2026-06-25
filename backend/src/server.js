@@ -16,6 +16,7 @@ import authRoutes from './modules/auth/auth.routes.js';
 import userRoutes from './modules/users/user.routes.js';
 import dashboardRoutes from './modules/dashboard/dashboard.routes.js';
 import auditoriaRoutes from './modules/auditoria/auditoria.routes.js';
+import missingRoutes from './modules/missing/missing.routes.js';
 
 // ── Configuración ──
 const app = express();
@@ -63,6 +64,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/auditoria', auditoriaRoutes);
+app.use('/api/missing', missingRoutes);
 
 // ── Ruta no encontrada ──
 app.use((_req, res) => {
