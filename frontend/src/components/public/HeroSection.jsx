@@ -7,14 +7,22 @@ export default function HeroSection() {
 
   return (
     <section className="relative flex flex-col items-center justify-center text-center px-4 py-12 overflow-hidden bg-[#004a99]">
-      <div className="relative z-10 flex flex-col items-center">
+      <div className="relative z-10 flex flex-col items-center w-full max-w-xl">
+        <div className="flex justify-center items-center mb-6">
+          <div className="w-24 h-12 shrink-0">
+            <img
+              alt="Logo Faro de Venezuela"
+              className="w-full h-full object-contain"
+              src={bandera}
+            />
+          </div>
 
+          <h2 className="font-headline-lg-mobile text-2xl sm:text-3xl text-white font-extrabold uppercase tracking-tighter leading-tight font-montserrat text-left">
+            Rastreo de Desaparecidos
+          </h2>
+        </div>
 
-        <h2 className="font-headline-lg-mobile text-2xl sm:text-3xl text-white font-extrabold uppercase tracking-tighter leading-tight font-montserrat">
-          Rastreo de Desaparecidos
-        </h2>
-
-        <p className="mt-4 text-white/90 text-sm sm:text-base max-w-lg leading-relaxed font-medium  text-left">
+        <p className="mt-4 text-white/90 text-sm sm:text-base max-w-lg leading-relaxed font-medium  ">
           Cada reporte es una luz de esperanza que encendemos juntos. Creemos en la fuerza de la solidaridad y en el esfuerzo colectivo para reunir a cada persona con sus seres queridos. <br /><span className='font-black'>No perdamos la fe</span>.
         </p>
 
@@ -27,7 +35,7 @@ export default function HeroSection() {
 
         <button
           onClick={() => navigate('/registro')}
-          className="mt-6 bg-[#fecb00] text-[#6e5700] px-8 py-4 font-bold rounded-xl shadow-lg active:scale-95 transition-transform hover:bg-[#ffe08b] flex items-center gap-2 font-montserrat text-sm cursor-pointer"
+          className="mt-8 bg-[#fecb00] text-[#6e5700] px-8 py-4 font-bold rounded-xl shadow-lg active:scale-95 transition-transform hover:bg-[#ffe08b] flex items-center gap-2 font-montserrat text-sm cursor-pointer"
         >
           <span className="material-symbols-outlined">person_add</span>
           REGISTRAR DESAPARECIDO

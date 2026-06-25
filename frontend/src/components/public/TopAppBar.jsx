@@ -7,16 +7,10 @@ export default function TopAppBar({ search, setSearch }) {
 
   return (
     <header className="fixed top-0 w-full z-50 bg-[#00346f] text-white shadow-md border-b border-white/10 flex items-center justify-between px-4 h-16">
-      <div className="w-20 h-10  p-1">
-        <img
-          alt="Logo Faro de Venezuela"
-          className="w-full h-full object-contain "
-          src={bandera}
-        />
-      </div>
+
       {!showSearch ? (
         <>
-          <h1 className="font-headline-md text-lg sm:text-xl font-bold tracking-tight text-white uppercase text-center flex-1 font-montserrat">
+          <h1 className="font-headline-md text-lg sm:text-xl font-bold tracking-tight text-white uppercase  flex-1 font-montserrat">
             Faro de Venezuela
           </h1>
           <button

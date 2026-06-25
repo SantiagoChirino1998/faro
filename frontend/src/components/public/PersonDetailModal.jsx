@@ -30,14 +30,14 @@ export default function PersonDetailModal({ person, onClose }) {
           <span className="material-symbols-outlined text-[16px]">close</span>
         </button>
 
-        {/* Large Header Image Area (Clean & Unobstructed) */}
-        <div className="relative h-80 sm:h-96 w-full bg-[#002d60] overflow-hidden flex items-center justify-center shrink-0">
+        {/* Large Header Image Area */}
+        <div className="relative h-64 sm:h-72 w-full bg-gradient-to-b from-transparent to-black/85 overflow-hidden flex items-end justify-center shrink-0">
           {person.fotoUrl ? (
             <img
               src={person.fotoUrl}
               alt={person.nombreCompleto}
               onClick={() => setIsZoomed(true)}
-              className="absolute inset-0 w-full h-full object-cover cursor-zoom-in hover:scale-105 transition-all duration-300"
+              className="absolute inset-0 w-full h-full object-cover cursor-zoom-in hover:scale-105 "
             />
           ) : (
             <div className="absolute inset-0 bg-[#004a99] flex flex-col items-center justify-center text-white/40">
@@ -64,39 +64,39 @@ export default function PersonDetailModal({ person, onClose }) {
               Ampliar
             </div>
           )}
-        </div>
 
-        {/* Text/Identity Header Section (Below Image) */}
-        <div className="pt-4 pb-3 px-5 border-b border-white/10 bg-[#002d60]/50 text-center shrink-0">
-          <h3 className="text-xl font-bold font-montserrat text-white uppercase tracking-tight">
-            {person.nombreCompleto}
-          </h3>
-          <div className="flex gap-2 mt-1.5 justify-center text-[9px] font-bold tracking-wider text-[#fecb00]">
-            <span className="bg-white/10 px-2.5 py-0.5 rounded-full uppercase">{person.edad} AÑOS</span>
-            <span className="bg-white/10 px-2.5 py-0.5 rounded-full uppercase">
-              {person.sexo === 'M' ? 'MASCULINO' : person.sexo === 'F' ? 'FEMENINO' : 'OTRO'}
-            </span>
+          {/* Text/Identity overlay */}
+          <div className="relative z-10 p-5 text-center w-full bg-gradient-to-t from-black/95 via-black/50 to-transparent">
+            <h3 className="text-xl sm:text-2xl font-black font-montserrat text-white uppercase tracking-tight">
+              {person.nombreCompleto}
+            </h3>
+            <div className="flex gap-2 mt-1.5 justify-center text-[10px] font-bold tracking-wider text-[#fecb00]">
+              <span className="bg-white/10 px-3 py-0.5 rounded-full uppercase">{person.edad} AÑOS</span>
+              <span className="bg-white/10 px-3 py-0.5 rounded-full uppercase">
+                {person.sexo === 'M' ? 'MASCULINO' : person.sexo === 'F' ? 'FEMENINO' : 'OTRO'}
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Content Area - Frosted Card Slots (Compact) */}
-        <div className="p-4 space-y-2.5 max-h-[30vh] overflow-y-auto custom-scrollbar bg-[#00346f]/50">
+        {/* Content Area - Frosted Card Slots */}
+        <div className="p-5 space-y-3.5 max-h-[35vh] overflow-y-auto custom-scrollbar bg-[#00346f]/50">
           {/* Last Location */}
-          <div className="glass-card p-3 rounded-xl flex gap-3 items-start hover:border-white/20 transition-colors">
-            <span className="material-symbols-outlined text-[#fecb00] shrink-0 text-lg mt-0.5">location_on</span>
+          <div className="glass-card p-4 rounded-2xl flex gap-3.5 items-start hover:border-white/20 transition-colors">
+            <span className="material-symbols-outlined text-[#fecb00] shrink-0 text-xl mt-0.5">location_on</span>
             <div className="min-w-0 flex-1">
-              <h5 className="text-[9px] text-white/50 uppercase font-bold tracking-wider">Última Ubicación</h5>
-              <p className="text-xs text-white/90 mt-0.5 leading-normal font-medium">{person.ultimaUbicacion}</p>
+              <h5 className="text-[10px] text-white/50 uppercase font-bold tracking-wider">Última Ubicación</h5>
+              <p className="text-sm text-white/90 mt-0.5 leading-normal font-medium">{person.ultimaUbicacion}</p>
             </div>
           </div>
 
           {/* Particular Features */}
           {person.rasgosParticulares && (
-            <div className="glass-card p-3 rounded-xl flex gap-3 items-start hover:border-white/20 transition-colors">
-              <span className="material-symbols-outlined text-[#fecb00] shrink-0 text-lg mt-0.5">visibility</span>
+            <div className="glass-card p-4 rounded-2xl flex gap-3.5 items-start hover:border-white/20 transition-colors">
+              <span className="material-symbols-outlined text-[#fecb00] shrink-0 text-xl mt-0.5">visibility</span>
               <div className="min-w-0 flex-1">
-                <h5 className="text-[9px] text-white/50 uppercase font-bold tracking-wider">Rasgos Particulares</h5>
-                <p className="text-xs text-white/90 mt-0.5 leading-relaxed font-medium whitespace-pre-wrap">
+                <h5 className="text-[10px] text-white/50 uppercase font-bold tracking-wider">Rasgos Particulares</h5>
+                <p className="text-sm text-white/90 mt-0.5 leading-relaxed font-medium whitespace-pre-wrap">
                   {person.rasgosParticulares}
                 </p>
               </div>
@@ -104,12 +104,12 @@ export default function PersonDetailModal({ person, onClose }) {
           )}
 
           {/* Registered and Phone Details Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             {/* Phone */}
-            <div className="glass-card p-3 rounded-xl flex gap-3 items-start hover:border-white/20 transition-colors">
-              <span className="material-symbols-outlined text-[#fecb00] shrink-0 text-lg">call</span>
+            <div className="glass-card p-4 rounded-2xl flex gap-3.5 items-start hover:border-white/20 transition-colors">
+              <span className="material-symbols-outlined text-[#fecb00] shrink-0 text-xl">call</span>
               <div className="min-w-0 flex-1">
-                <h5 className="text-[9px] text-white/50 uppercase font-bold tracking-wider">Teléfono</h5>
+                <h5 className="text-[10px] text-white/50 uppercase font-bold tracking-wider">Teléfono</h5>
                 <a
                   href={`tel:${person.telefonoContacto}`}
                   className="text-xs text-white hover:text-[#fecb00] font-bold mt-0.5 block truncate underline"
@@ -120,10 +120,10 @@ export default function PersonDetailModal({ person, onClose }) {
             </div>
 
             {/* Date Registered */}
-            <div className="glass-card p-3 rounded-xl flex gap-3 items-start hover:border-white/20 transition-colors">
-              <span className="material-symbols-outlined text-[#fecb00] shrink-0 text-lg">calendar_month</span>
+            <div className="glass-card p-4 rounded-2xl flex gap-3.5 items-start hover:border-white/20 transition-colors">
+              <span className="material-symbols-outlined text-[#fecb00] shrink-0 text-xl">calendar_month</span>
               <div className="min-w-0 flex-1">
-                <h5 className="text-[9px] text-white/50 uppercase font-bold tracking-wider">Reportado el</h5>
+                <h5 className="text-[10px] text-white/50 uppercase font-bold tracking-wider">Reportado el</h5>
                 <p className="text-xs text-white/90 font-semibold mt-0.5">
                   {new Date(person.fechaRegistro).toLocaleDateString('es-ES', {
                     year: 'numeric',
