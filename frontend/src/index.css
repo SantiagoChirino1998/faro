@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+:root,
+
+[data-theme="default"] {
+  --color-tertiary-fixed: 255 223 144;
+  /* #ffdf90 */
+  --color-error: 186 26 26;
+  /* #ba1a1a */
+  --color-tertiary-container: 210 165 1;
+  /* #d2a501 */
+  --color-tertiary-fixed-dim: 240 193 44;
+  /* #f0c12c */
+
+  --color-on-surface-variant: 63 73 65;
+  /* #3f4941 */
+
+  --color-primary-container: 38 132 81;
+  /* #268451 */
+  --color-primary: 0 106 59;
+  /* #006a3b */
+
+  --color-tertiary: 117 91 0;
+  /* #755b00 */
+  --color-on-tertiary: 255 255 255;
+
+  --color-on-secondary-container: 116 92 0;
+  /* #745c00 */
+  --color-on-tertiary-container: 80 61 0;
+  /* #503d00 */
+
+  --color-on-error: 255 255 255;
+
+  --color-secondary-fixed-dim: 233 195 73;
+  /* #e9c349 */
+
+  --color-inverse-primary: 126 217 158;
+  /* #7ed99e */
+  --color-inverse-surface: 13 44 110;
+  /* #0d2c6e */
+
+  --color-on-background: 0 23 74;
+  /* #00174a */
+
+  --color-outline-variant: 190 202 190;
+  /* #becabe */
+
+  --color-surface-container-low: 242 243 255;
+  /* #f2f3ff */
+
+  --color-on-secondary: 255 255 255;
+
+  --color-on-surface: 0 23 74;
+  /* #00174a */
+
+  --color-background: 250 248 255;
+  /* #faf8ff */
+
+  --color-on-secondary-fixed: 36 26 0;
+
+  --color-surface-container-highest: 219 225 255;
+  --color-on-tertiary-fixed: 36 26 0;
+
+  --color-secondary-container: 254 214 91;
+  /* #fed65b */
+
+  --color-primary-fixed: 154 246 184;
+  /* #9af6b8 */
+
+  --color-surface-container: 234 237 255;
+  /* #eaedff */
+
+  --color-on-secondary-fixed-variant: 87 69 0;
+
+  --color-surface-container-lowest: 255 255 255;
+
+  --color-inverse-on-surface: 238 240 255;
+
+  --color-on-primary-fixed-variant: 0 82 45;
+
+  --color-surface-dim: 207 217 255;
+  --color-surface-container-high: 227 231 255;
+
+  --color-primary-fixed-dim: 126 217 158;
+
+  --color-surface-tint: 0 109 61;
+
+  --color-surface-variant: 219 225 255;
+
+  --color-secondary: 115 92 0;
+  /* #735c00 */
+
+  --color-surface-bright: 250 248 255;
+
+  --color-error-container: 255 218 214;
+
+  --color-on-primary: 255 255 255;
+
+  --color-on-error-container: 147 0 10;
+
+  --color-on-primary-fixed: 0 33 15;
+
+  --color-on-tertiary-fixed-variant: 88 68 0;
+
+  --color-on-primary-container: 246 255 244;
+
+  --color-secondary-fixed: 255 224 136;
+
+  --color-outline: 111 122 112;
+
+  --color-surface: 250 248 255;
+}
+
+
+
+/* ── Material Symbols ── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.fill-icon {
+  font-variation-settings: 'FILL' 1;
+}
+
+/* ── Scrollbar Styling ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-outline-variant));
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-outline));
+}
+
+/* ── Smooth transitions ── */
+* {
+  scroll-behavior: smooth;
+}
+
+/* ── Theme transition ── */
+*,
+*::before,
+*::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* ── Login background animation ── */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* ── Fade in animation ── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+/* ── Pulse ring for login ── */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: scale(0.95);
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 3s ease-in-out infinite;
+}
