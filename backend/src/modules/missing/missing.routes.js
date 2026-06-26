@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { register, list, stats } from './missing.controller.js';
+import { register, list, stats, reportFound } from './missing.controller.js';
 import validate from '../../shared/middleware/validate.js';
 import { registerMissingSchema } from './missing.validation.js';
 import { upload } from './middleware/upload.js';
@@ -10,6 +10,8 @@ const router = Router();
 // Rutas públicas de desaparecidos con límite de lectura público
 router.get('/stats', publicReadLimiter, stats);
 router.get('/', publicReadLimiter, list);
+// Reportar persona como encontrada (público pero limitado)
+router.patch('/:id/found', publicReadLimiter, reportFound);
 // Limitar a 1 registro por minuto por IP para evitar spam
 router.post('/', registerMissingLimiter, upload.single('foto'), validate(registerMissingSchema), register);
 

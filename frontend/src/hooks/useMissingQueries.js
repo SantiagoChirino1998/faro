@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getMissing, getStats, registerMissing } from '../services/missingService';
+import { getMissing, getStats, registerMissing, reportPersonFound } from '../services/missingService';
 
 // ── Constantes de caché ──
 // Intervalo de refresco automático: 5 minutos
@@ -66,6 +66,22 @@ export function useCreateMissing() {
     mutationFn: (formData) => registerMissing(formData),
     onSuccess: () => {
       // Marcar como obsoletos para que al volver al listado se refresquen
+      queryClient.invalidateQueries({ queryKey: ['missingList'] });
+      queryClient.invalidateQueries({ queryKey: ['missingStats'] });
+    },
+  });
+}
+
+/**
+ * Hook de mutación para reportar una persona como encontrada.
+ * Al completarse, invalida inmediatamente el listado y las estadísticas
+ * para sincronizar la UI con la base de datos de manera reactiva.
+ */
+export function useReportPersonFound() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, nombre, email }) => reportPersonFound(id, { nombre, email }),
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['missingList'] });
       queryClient.invalidateQueries({ queryKey: ['missingStats'] });
     },

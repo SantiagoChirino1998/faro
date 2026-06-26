@@ -1,4 +1,4 @@
-import { registerMissing, listMissing, getStats } from './missing.service.js';
+import { registerMissing, listMissing, getStats, markAsFound } from './missing.service.js';
 
 export const register = async (req, res, next) => {
   try {
@@ -29,6 +29,16 @@ export const stats = async (req, res, next) => {
   try {
     const result = await getStats();
     res.json({ success: true, data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const reportFound = async (req, res, next) => {
+  try {
+    const { nombre, email } = req.body;
+    const missing = await markAsFound(req.params.id, { nombre, email });
+    res.json({ success: true, data: missing });
   } catch (error) {
     next(error);
   }

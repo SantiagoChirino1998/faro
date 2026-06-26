@@ -1,9 +1,43 @@
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useReportPersonFound } from '../../hooks/useMissingQueries';
 
 export default function PersonDetailModal({ person, onClose }) {
   const [isZoomed, setIsZoomed] = useState(false);
+  const [showReportForm, setShowReportForm] = useState(false);
+  const [informanteName, setInformanteName] = useState('');
+  const [informanteEmail, setInformanteEmail] = useState('');
+  const [compromisoChecked, setCompromisoChecked] = useState(false);
+
+  const reportMutation = useReportPersonFound();
 
   if (!person) return null;
+
+  const handleSubmitReport = (e) => {
+    e.preventDefault();
+    if (!informanteName || !informanteEmail || !compromisoChecked) {
+      toast.error('Por favor complete todos los campos y acepte la declaración.');
+      return;
+    }
+
+    reportMutation.mutate(
+      {
+        id: person._id,
+        nombre: informanteName.trim(),
+        email: informanteEmail.trim(),
+      },
+      {
+        onSuccess: () => {
+          toast.success('¡Reporte guardado! Gracias por tu civismo y solidaridad.');
+          onClose(); // Cerrar el modal principal
+        },
+        onError: (err) => {
+          const errMsg = err.response?.data?.message || 'Error al enviar el reporte. Por favor intente de nuevo.';
+          toast.error(errMsg);
+        },
+      }
+    );
+  };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -136,16 +170,130 @@ export default function PersonDetailModal({ person, onClose }) {
           </div>
         </div>
 
-        {/* Footer Area with Call button */}
+        {/* Footer Area - Replaced call button with Report as Found button */}
         <div className="p-4 border-t border-white/10 bg-[#002d60] flex gap-2">
-          <a
-            href={`tel:${person.telefonoContacto}`}
-            className="w-full bg-[#fecb00] text-[#6e5700] py-3.5 rounded-2xl font-extrabold flex items-center justify-center gap-2 hover:bg-[#ffe08b] active:scale-95 transition-transform text-sm tracking-wide shadow-lg cursor-pointer"
-          >
-            <span className="material-symbols-outlined text-lg">call</span>
-            LLAMAR A FAMILIAR
-          </a>
+          {person.estado === 'DESAPARECIDO' ? (
+            <button
+              onClick={() => setShowReportForm(true)}
+              className="w-full bg-emerald-500 hover:bg-emerald-600 text-white py-3.5 rounded-2xl font-extrabold flex items-center justify-center gap-2 hover:scale-[1.01] active:scale-95 transition-all text-sm tracking-wide shadow-lg cursor-pointer border border-emerald-400/20"
+            >
+              <span className="material-symbols-outlined text-lg">favorite</span>
+              REPORTAR COMO ENCONTRADO(A)
+            </button>
+          ) : (
+            <div className="w-full bg-emerald-500/20 text-emerald-300 py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 border border-emerald-500/30">
+              <span className="material-symbols-outlined text-base">check_circle</span>
+              ¡LOCALIZADO(A) SANO Y SALVO!
+            </div>
+          )}
         </div>
+
+        {/* Report Overlay Form */}
+        {showReportForm && (
+          <div className="absolute inset-0 z-40 bg-[#002244] flex flex-col p-5 overflow-y-auto animate-fade-in text-left">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3.5 mb-4 shrink-0">
+              <h4 className="font-bold text-white font-montserrat text-base flex items-center gap-2">
+                <span className="material-symbols-outlined text-emerald-400">favorite</span>
+                Reportar Hallazgo
+              </h4>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowReportForm(false);
+                  setInformanteName('');
+                  setInformanteEmail('');
+                  setCompromisoChecked(false);
+                }}
+                className="text-white/60 hover:text-white flex items-center justify-center cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-lg">close</span>
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmitReport} className="flex-1 flex flex-col gap-3.5">
+              <p className="text-xs text-white/80 leading-normal font-medium">
+                Ingresa tus datos cívicos para completar el reporte y retirar la alerta de búsqueda.
+              </p>
+
+              <div>
+                <label className="text-[9px] text-white/50 uppercase font-extrabold tracking-wider mb-1 block">
+                  Tu Nombre Completo
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={informanteName}
+                  onChange={(e) => setInformanteName(e.target.value)}
+                  placeholder="Ej: Juan Pérez"
+                  className="w-full bg-white/5 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                />
+              </div>
+
+              <div>
+                <label className="text-[9px] text-white/50 uppercase font-extrabold tracking-wider mb-1 block">
+                  Tu Correo Electrónico
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={informanteEmail}
+                  onChange={(e) => setInformanteEmail(e.target.value)}
+                  placeholder="Ej: juan.perez@gmail.com"
+                  className="w-full bg-white/5 border border-white/15 rounded-xl px-3 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                />
+              </div>
+
+              {/* Solemn Pledge Box */}
+              <div className="bg-emerald-950/40 border border-emerald-500/25 p-3.5 rounded-xl text-[10px] text-emerald-200 font-medium tracking-wide leading-relaxed space-y-1.5 mt-1">
+                <p className="font-extrabold text-[#fecb00] uppercase tracking-wider flex items-center gap-1.5 text-xs">
+                  <span className="material-symbols-outlined text-sm">balance</span>
+                  Compromiso Moral y Cívico
+                </p>
+                <p>
+                  Bajo mi conciencia moral, civil y espiritual, juro solemnemente y doy fe de que la información que estoy proporcionando es absolutamente verídica y que esta persona ha sido localizada sana y salva.
+                </p>
+                <p className="font-bold text-white/90">
+                  Entiendo que emitir un reporte de localización falso constituye una falta grave al honor, sabotea la búsqueda de personas reales y perjudica a familias en momentos de angustia.
+                </p>
+              </div>
+
+              {/* Pledge Checkbox */}
+              <label className="flex items-start gap-2.5 text-[10px] text-white/80 select-none cursor-pointer mt-1 font-medium leading-tight">
+                <input
+                  type="checkbox"
+                  required
+                  checked={compromisoChecked}
+                  onChange={(e) => setCompromisoChecked(e.target.checked)}
+                  className="mt-0.5 accent-emerald-500 rounded border-white/20 bg-white/10 shrink-0 cursor-pointer"
+                />
+                <span>Juro bajo mi honor cívico la veracidad del hallazgo y asumo la responsabilidad moral del reporte.</span>
+              </label>
+
+              {/* Submit / Cancel Actions */}
+              <div className="mt-auto pt-4 flex gap-2.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowReportForm(false);
+                    setInformanteName('');
+                    setInformanteEmail('');
+                    setCompromisoChecked(false);
+                  }}
+                  className="flex-1 bg-white/10 hover:bg-white/15 text-white/90 py-3 rounded-xl font-bold text-xs transition-all cursor-pointer text-center border border-white/5 active:scale-95"
+                >
+                  CANCELAR
+                </button>
+                <button
+                  type="submit"
+                  disabled={!informanteName || !informanteEmail || !compromisoChecked || reportMutation.isPending}
+                  className="flex-1 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-35 disabled:pointer-events-none text-white py-3 rounded-xl font-extrabold text-xs transition-all cursor-pointer text-center border border-emerald-400/20 active:scale-95 flex items-center justify-center gap-1.5 shadow-md font-montserrat"
+                >
+                  {reportMutation.isPending ? 'ENVIANDO...' : 'CONFIRMAR HALLAZGO'}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
       </div>
 
       {/* Lightbox zoom overlay */}

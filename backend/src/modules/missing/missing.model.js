@@ -42,6 +42,11 @@ const missingPersonSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  reportadoEncontradoPor: {
+    nombre: { type: String, default: null },
+    email: { type: String, default: null },
+    fechaReporte: { type: Date, default: null },
+  },
 });
 
 missingPersonSchema.index({ estado: 1, fechaRegistro: -1 });

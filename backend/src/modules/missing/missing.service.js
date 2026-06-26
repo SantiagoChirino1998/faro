@@ -52,8 +52,8 @@ export const listMissing = async ({ page = 1, limit = 20, search = '', estado = 
   }
 
   if (search) {
-    // Utilizar el índice de texto de MongoDB para búsqueda rápida con q
-    query.$text = { $search: search };
+    // Búsqueda parcial e insensible a mayúsculas/minúsculas en el nombre
+    query.nombreCompleto = { $regex: search, $options: 'i' };
   }
 
   const skip = (Number(page) - 1) * Number(limit);
@@ -97,4 +97,39 @@ export const getStats = async () => {
   cacheSet(STATS_KEY, result, CACHE_TTL);
 
   return result;
+};
+
+/**
+ * Marca a una persona desaparecida como ENCONTRADA.
+ * Registra los datos cívicos del informante e invalida la caché del listado y estadísticas.
+ */
+export const markAsFound = async (id, { nombre, email }) => {
+  const missing = await MissingPerson.findById(id);
+  if (!missing) {
+    const error = new Error('No se encontró el registro de la persona.');
+    error.status = 404;
+    throw error;
+  }
+
+  if (missing.estado === 'ENCONTRADO') {
+    const error = new Error('Este caso ya ha sido marcado como encontrado anteriormente.');
+    error.status = 400;
+    throw error;
+  }
+
+  // Actualizar estado y guardar informante
+  missing.estado = 'ENCONTRADO';
+  missing.reportadoEncontradoPor = {
+    nombre,
+    email,
+    fechaReporte: new Date(),
+  };
+
+  await missing.save();
+
+  // Invalidar caché pública para que se reflejen los cambios al instante
+  cacheInvalidateByPrefix(LIST_PREFIX);
+  cacheDelete(STATS_KEY);
+
+  return missing;
 };

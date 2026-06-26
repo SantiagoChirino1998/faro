@@ -22,3 +22,8 @@ export const getStats = async () => {
   const { data } = await publicApi.get('/missing/stats');
   return data.data;
 };
+
+export const reportPersonFound = async (id, { nombre, email }) => {
+  const { data } = await publicApi.patch(`/missing/${id}/found`, { nombre, email });
+  return data;
+};

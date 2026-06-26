@@ -40,8 +40,8 @@ export default function MissingList({
             className="w-full bg-white/5 border border-white/15 rounded-xl px-2.5 py-1.5 text-xs text-white font-semibold focus:outline-none focus:ring-2 focus:ring-[#fecb00] focus:border-transparent transition-all cursor-pointer"
           >
             <option value="" className="bg-[#00346f] text-white font-semibold">Todos los casos</option>
-            <option value="DESAPARECIDO" className="bg-[#00346f] text-white font-semibold">Activos (Desaparecido)</option>
-            <option value="ENCONTRADO" className="bg-[#00346f] text-white font-semibold">Resueltos (Encontrado)</option>
+            <option value="DESAPARECIDO" className="bg-[#00346f] text-white font-semibold">Desaparecidos</option>
+            <option value="ENCONTRADO" className="bg-[#00346f] text-white font-semibold">Encontrados</option>
           </select>
         </div>
 
@@ -83,7 +83,7 @@ export default function MissingList({
             <div key={idx} className="glass-card p-3 rounded-xl flex items-center gap-4 animate-pulse">
               {/* Portrait Image Skeleton */}
               <div className="w-16 h-20 bg-white/10 rounded-lg shrink-0 border border-white/5"></div>
-              
+
               {/* Information Area Skeleton */}
               <div className="flex-1 space-y-2.5 min-w-0">
                 <div className="flex justify-between items-center gap-2">

@@ -8,7 +8,7 @@ export default function PersonCard({ person, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="glass-card p-3 rounded-xl flex items-center gap-4 active:bg-white/20 transition-all cursor-pointer hover:border-white/40 hover:scale-[1.01] duration-200"
+      className="glass-card p-3 rounded-xl flex items-center gap-4 active:bg-white/20 transition-all cursor-pointer hover:border-white/40 "
     >
       {/* Portrait Image Container */}
       <div className="w-16 h-20 rounded-lg overflow-hidden shrink-0 bg-white/10 flex items-center justify-center border border-white/15 shadow-inner">
@@ -38,7 +38,7 @@ export default function PersonCard({ person, onClick }) {
               : 'bg-red-500/20 text-red-300 border border-red-500/30'
               }`}
           >
-            {person.estado === 'ENCONTRADO' ? 'Encontrado' : 'Activo'}
+            {person.estado === 'ENCONTRADO' ? 'Encontrado' : 'Desaparecido'}
           </span>
         </div>
 
@@ -53,7 +53,7 @@ export default function PersonCard({ person, onClick }) {
             {person.edad} años
           </span>
           <span className="text-[9px] bg-white/10 px-2 py-0.5 rounded-full text-white/80 font-bold uppercase tracking-wider">
-            {person.sexo === 'M' ? 'Hombre' : person.sexo === 'Mujer' ? 'Fem' : 'Otro'}
+            {person.sexo === 'M' ? 'Masculino' : person.sexo === 'F' ? 'Femenino' : 'Otro'}
           </span>
         </div>
       </div>
